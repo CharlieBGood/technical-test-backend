@@ -1,4 +1,9 @@
+bcrypt==3.2.0
 bottle==0.12.13
+bottle-cors-plugin==0.1.9
+cffi==1.14.6
 marshmallow==2.13.5
-peewee==2.10.1
+peewee==3.14.4
+pycparser==2.20
 PyJWT==1.5.2
+six==1.16.0

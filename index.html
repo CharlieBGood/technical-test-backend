@@ -1,1 +1,355 @@
 <!-- You can use any js library (: -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Charlies Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
+  <style>
+
+    .login-form {
+    width: 340px;
+    margin: 50px auto;
+  	font-size: 15px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    .login-form .form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+        font-size: 30px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {        
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    body{
+      font-family:arial,sans-serif;
+      font-size:100%;
+      margin:3em;
+    }
+    .notes-form {
+      width: 1200px;
+      margin: 50px auto;
+      font-size: 15px;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    }
+    h2,p{
+      font-size:100%;
+      font-weight:normal;
+    }
+    ul,li{
+      list-style:none;
+    }
+    ul{
+      overflow:hidden;
+      padding:3em;
+    }
+    ul li a{
+      text-decoration:none;
+      color:#000;
+      background:#ffc;
+      display:block;
+      height:10em;
+      width:10em;
+      padding:1em;
+    }
+    ul li{
+      margin:1em;
+      float:left;
+    }
+    ul li h2{
+      font-size:140%;
+      font-weight:bold;
+      padding-bottom:10px;
+    }
+    ul li p{
+      font-family:"Reenie Beanie",arial,sans-serif;
+      font-size:180%;
+    }
+    ul li a{
+      text-decoration:none;
+      color:#000;
+      background:#ffc;
+      display:block;
+      height:10em;
+      width:10em;
+      padding:1em;
+      -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+      -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+      box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+      
+    }
+    ul li a:hover,ul li a:focus{
+      -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+      -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+      box-shadow:10px 10px 7px rgba(0,0,0,.7);
+      -webkit-transform: scale(1.25);
+      -moz-transform: scale(1.25);
+      -o-transform: scale(1.25);
+      position:relative;
+      z-index:5;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="login-form" id="login-form">
+  <div class="form">
+    <h2 class="text-center">Log in</h2>       
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" required="required" id="login-username">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" required="required" id="login-password">
+    </div>
+    <div class="form-group">
+        <button type="button" id="login-button" class="btn btn-primary btn-block">Log in</button>
+    </div>      
+    <p class="text-center" id="new_account"><a href="javascript:void(0)">Create an Account</a></p>
+  </div>
+</div>
+
+<div class="login-form" id="signup-form">
+  <div class="form">
+    <h2 class="text-center">Sign Up</h2>       
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" required="required" id="signup-username">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" required="required" id="signup-password">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Email" required="required" id="signup-email">
+    </div>
+    <div class="form-group">
+        <button type="button" id="signup-button" class="btn btn-primary btn-block">Sign Up</button>
+    </div>      
+    <p class="text-center" id="already_acount"><a href="javascript:void(0)">Log in</a></p>
+  </div>
+</div>
+
+<div class="notes-form border" id="notes">
+    <h1 class="text-center" id="welcome-title"></h1>  
+
+    <ul id="elements-list"></ul>     
+
+    <div class="form-group text-center">
+        <button type="button" id="addnote-button" class="btn btn-primary w-25" 
+        data-toggle="modal" data-target="#noteModal">Add note</button>
+    </div>      
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New note</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form">
+          <div class="form-group">
+              <input type="text" class="form-control" placeholder="Title" required="required" id="note-title">
+          </div>
+          <div class="form-group">
+              <textarea class="form-control" id="note-content" placeholder="Content" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="addnote-submit" class="btn btn-primary">Add note</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  token = ''
+
+  $(document).ready(function(){
+    $('#signup-form').hide();
+    $('#notes').hide();
+  })
+
+  $('#new_account').click(function(){
+    $('#login-form').hide();
+    $('#signup-form').show();
+  })
+
+  $('#already_acount').click(function(){
+    $('#login-form').show();
+    $('#signup-form').hide();
+  })
+
+  $('#login-button').click(function(){
+
+    username = $('#login-username').val() != '' ? $('#login-username').val() : undefined
+    password = $('#login-password').val() != '' ? $('#login-password').val() : undefined
+
+    $.ajax({
+      type: 'POST',
+      url: "http://localhost:8001/sign-in",
+      data: {
+          username : username,
+          password : password,
+      }
+    })
+    .done(response => {
+        if (!response['token']){
+          if (response['username']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Username',
+              text: response['username']
+            })
+          }
+          else if (response['password']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Password',
+              text: response['password']
+            })
+          }
+        }
+        else{
+          token = response['token'];
+          $('#login-form').hide();
+          $('#welcome-title').text('Welcome '+response['username']+'!')
+          updateNotes();
+          $('#notes').show();
+        }
+    })
+  })
+
+  $('#signup-button').click(function(){
+    username = $('#signup-username').val() != '' ? $('#signup-username').val() : undefined
+    password = $('#signup-password').val() != '' ? $('#signup-password').val() : undefined
+    email = $('#signup-email').val() != '' ? $('#signup-email').val() : undefined
+
+    $.ajax({
+      type: 'POST',
+      url: "http://localhost:8001/sign-up",
+      data: {
+          username : username,
+          password : password,
+          email: email
+      }
+    })
+    .done(response => {
+      if (!response['success']){
+          if (response['username']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Username',
+              text: response['username']
+            })
+          }
+          else if (response['password']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Password',
+              text: response['password']
+            })
+          }
+          else if (response['email']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Email',
+              text: response['email']
+            })
+          }
+        }
+        else{
+          Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: response['success']
+          })
+          $('#login-form').show();
+          $('#signup-form').hide();
+        }
+    })
+  })
+
+  $('#addnote-submit').click(function(){
+    title = $('#note-title').val() != '' ? $('#note-title').val() : undefined
+    content = $('#note-content').val() != '' ? $('#note-content').val() : undefined
+    $.ajax({
+      type: 'POST',
+      url: "http://localhost:8001/notes",
+      data: {
+          token : token,
+          title : title,
+          content : content
+      }
+    })
+    .done(response => {
+      if (!response['success']){
+          if (response['title']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Title',
+              text: response['title']
+            })
+          }
+          else if (response['content']){
+            Swal.fire({
+              icon: 'error',
+              title: 'Content',
+              text: response['content']
+            })
+          }
+        }
+        else{
+          $('#noteModal').modal('toggle');
+          Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: response['success']
+          })
+          updateNotes();
+        }
+    })
+  })
+
+  function updateNotes(){
+    $.ajax({
+      type: 'GET',
+      url: "http://localhost:8001/notes",
+      data: {
+          token : token
+      }
+    })
+    .done(response => {
+      response = JSON.parse(response)
+      var notes = ''
+      for(var i=0; i < response.length; i++){
+        notes += "<li><a href='javascript:void(0)'><h2>"+response[i]['title']+"</h2><p>"+response[i]['content']+"</p></a></li>"
+      }
+      document.getElementById('elements-list').innerHTML = notes;
+    })
+  }
+
+</script>
+</html> 
